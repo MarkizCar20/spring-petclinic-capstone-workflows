@@ -2,7 +2,6 @@ name: 'Google cloud IaC Destroy Resources'
 defaults:
   run:
     shell: bash
-    working-directory: iac
 on:
   workflow_dispatch:
 
@@ -23,7 +22,7 @@ jobs:
       - name: Terraform setup
         uses: hashicorp/setup-terraform@v1
         with:
-          terraform-version: 1.1.7
+          terraform_version: 1.1.7
 
       - name: Terraform init
         run: terraform init
