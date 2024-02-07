@@ -1,0 +1,32 @@
+name: 'Google cloud IaC Destroy Resources'
+defaults:
+  run:
+    shell: bash
+    working-directory: iac
+on:
+  workflow_dispatch:
+
+jobs:
+  destroy:
+    name: 'Terraform destroy:'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Auth GCP Service Account
+        uses: google-github-actions/auth@v0
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+          cleanup_credentials: false
+      
+      - name: Terraform setup
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform-version: 1.1.7
+
+      - name: Terraform init
+        run: terraform init
+
+      - name: Terraform Destroy
+        run: terraform destory -auto-approve
