@@ -2,6 +2,7 @@ name: 'Google cloud IaC Destroy Resources'
 defaults:
   run:
     shell: bash
+    working-directory: ./terraform
 on:
   workflow_dispatch:
 

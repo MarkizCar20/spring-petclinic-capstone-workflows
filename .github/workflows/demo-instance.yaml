@@ -40,7 +40,7 @@ jobs:
       
       - name: Terraform init
         id: init
-        run: terraform init -backend-config="bucket="capstone_project_terraform_state""
+        run: terraform init -backend-config="bucket=capstone_project_terraform_state"
 
       # - name: Terraform format
       #   id: fmt
