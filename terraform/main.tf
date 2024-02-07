@@ -1,6 +1,14 @@
-provider "google" {
-
-    region = "us-central1"
+terraform {
+  required_providers {
+    google = {
+        source = "hashicorp/google"
+        version = "4.51.0"
+    }
+  }
+  backend "gcs" {
+    bucket = "capstone_project_terraform_state"
+    prefix = "terraform/state"
+  }
 }
 
 resource "google_compute_instance" "demo-instance" {
