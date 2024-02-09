@@ -30,7 +30,7 @@ resource "google_compute_instance" "default" {
       // Ephemeral public IP
     }
   }
-  metadata_startup_script = file("./web1.sh")
+  metadata_startup_script = file(".modules/compute/web1.sh")
 }
 
 #to allow http traffic to the instances
