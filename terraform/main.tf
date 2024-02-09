@@ -3,6 +3,7 @@ terraform {
     google = {
         source = "hashicorp/google"
         version = "4.51.0"
+        region = "us-central1"
     }
   }
   backend "gcs" {
