@@ -4,6 +4,7 @@ variable "instace_group_id" {}
 #Forwarding rule
 resource "google_compute_forwarding_rule" "default" {
   name = "global-rule"
+  region = "global"
   target = google_compute_target_http_proxy.default.id
   port_range = "80"
   load_balancing_scheme = "EXTERNAL_MANAGED"
