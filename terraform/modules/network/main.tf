@@ -39,10 +39,6 @@ resource "google_compute_url_map" "default" {
       paths = ["/app1/*"]
       service = google_compute_backend_service.default.id
     }
-    path_rule {
-      paths = ["/app2/*"]
-      service = google_compute_backend_service.default1.id
-    }
   }
 }
 
