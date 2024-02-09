@@ -11,28 +11,12 @@ terraform {
   }
 }
 
-resource "google_compute_instance" "demo-instance" {
-  name = "demo-instance"
-  machine_type = "f1-micro"
-  zone = "us-central1-c"
+module "compute" {
+  source = "./modules/compute"
+}
 
-  boot_disk {
-    initialize_params {
-      image = "debian-cloud/debian-10"
-    }
-  }
+module "network" {
+  source = "./modules/network"
 
-  network_interface {
-    network = "default"
-  }
-
-  metadata_startup_script = <<-EOF
-    #!/bin/bash
-    sudo apt-get update
-    sudo apt-get install apache2 -y
-    sudo service apache2 start
-    echo "Hello from temporary instance!" | sudo tee /var/www/html/index.html
-  EOF
-
-  allow_stopping_for_update = true
+  instace_group_id = module.compute.compute_instance_group_id
 }
