@@ -51,7 +51,7 @@ resource "google_compute_backend_service" "default" {
     port_name = "http"
     protocol = "HTTP"
     timeout_sec = 10
-    load_balancing_scheme = "EXTERNAL MANAGED"
+    load_balancing_scheme = "EXTERNAL_MANAGED"
     health_checks = [google_compute_health_check.default1.id]
     backend {
       group = var.instace_group_id
