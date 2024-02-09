@@ -1,5 +1,5 @@
 #INSTANCE GROUP 1
-resource "google_compute_instance_groups" "webservers" {
+resource "google_compute_instance_group" "webservers" {
   name = "terraform-webservers-us"
   description = "terraform test instance group"
   zone = "us-central1-c"
@@ -30,11 +30,11 @@ resource "google_compute_instance" "default" {
       // Ephemeral public IP
     }
   }
-  metadata_startup_script = file("web1.sh")
+  metadata_startup_script = file("./terraform/modules/compute/web1.sh")
 }
 
 #to allow http traffic to the instances
-resource "google_compute_firewal" "default" {
+resource "google_compute_firewall" "default" {
   name = "allow-http-traffic"
   network = "default"
   allow {
