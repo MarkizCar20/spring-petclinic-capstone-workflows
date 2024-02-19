@@ -17,7 +17,7 @@ resource "google_compute_instance_template" "group_instance" {
 #INSTANCE GROUP 1
 resource "google_compute_instance_group_manager" "webservers" {
   name = "terraform-webservers-us"
-  base_instance_name = "instance_x"
+  base_instance_name = "instance-x"
   description = "terraform test instance group"
   zone = "us-central1-c"
 
