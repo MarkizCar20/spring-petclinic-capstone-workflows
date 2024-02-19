@@ -18,5 +18,5 @@ module "compute" {
 module "network" {
   source = "./modules/network"
 
-  instance_group_id = module.compute.compute_instance_group_id
+  instance_group = module.compute.compute_instance_group
 }

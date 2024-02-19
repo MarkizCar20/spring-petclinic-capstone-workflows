@@ -1,5 +1,5 @@
 ## Global HTTP Load Balancer, configuration of LB resources
-variable "instance_group_id" {}
+variable "instance_group" {}
 
 #Forwarding rule
 resource "google_compute_forwarding_rule" "default" {
@@ -51,7 +51,7 @@ resource "google_compute_backend_service" "default" {
     load_balancing_scheme = "EXTERNAL_MANAGED"
     health_checks = [google_compute_health_check.default1.id]
     backend {
-      group = var.instance_group_id
+      group = var.instance_group
       balancing_mode = "UTILIZATION"
       max_utilization = 1.0
       capacity_scaler = 1.0
