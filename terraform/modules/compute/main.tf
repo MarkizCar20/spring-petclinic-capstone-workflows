@@ -37,6 +37,8 @@ resource "google_compute_autoscaler" "group_autoscaler" {
   name = "group-autoscaler"
   target = google_compute_instance_group_manager.webservers.self_link
 
+  zone = "us-central1-c"
+
   autoscaling_policy {
     max_replicas = 10
     min_replicas = 1
