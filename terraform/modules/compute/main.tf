@@ -8,7 +8,9 @@ resource "google_compute_instance_template" "group_instance" {
 
   network_interface {
     network = "default"
-    #Access config for ephemeral public IP If needed
+    access_config {
+      // Optional: Ephemeral external IP address
+    }
   }
 
   metadata_startup_script = file("./modules/compute/web1.sh")
