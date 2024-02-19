@@ -1,7 +1,7 @@
 resource "google_compute_instance_template" "group_instance" {
   name = "instance-template"
 
-  machine_type = "e1-micro"
+  machine_type = "e2-small"
   disk {
     source_image = "debian-cloud/debian-10"
   }
