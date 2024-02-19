@@ -60,3 +60,18 @@ resource "google_compute_firewall" "default" {
   }
   source_ranges = ["0.0.0.0/0"]
 }
+
+resource "google_compute_instance" "test_instance" {
+  name = "test-instance"
+  machine_type = "e2-small"
+
+  boot_disk {
+    source = "debian-cloud/debian-10"
+  }
+
+  network_interface {
+    network = "default"
+  }
+
+  metadata_startup_script = file("./modules/compute/web1.sh")
+}
