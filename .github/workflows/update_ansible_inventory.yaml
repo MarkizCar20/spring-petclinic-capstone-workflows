@@ -24,7 +24,7 @@ jobs:
           echo "instances_ips=$ips" >> $GITHUB_ENV
 
       - name: Update Ansible inventory
-        id: update inventory
+        id: update_inventory
         run: |
           instances_ips="${{ env.instances_ips }}"
           echo "[host_instances]" > ansible/inventory.ini
