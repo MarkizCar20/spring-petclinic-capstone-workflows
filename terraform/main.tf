@@ -4,6 +4,7 @@ terraform {
         source = "hashicorp/google"
         version = "4.51.0"
     }
+
   }
   backend "gcs" {
     bucket = "capstone_project_terraform_state"
