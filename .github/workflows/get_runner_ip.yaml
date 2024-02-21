@@ -34,5 +34,11 @@ jobs:
           echo "[runners]" > ./inventory.ini
           echo "$runner_ip" >> ./inventory.ini
 
-      
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add ./inventory.ini
+          git commit -m "Update Ansible inventory with runner IP"
+          git push https://${{ secrets.RUNNER_TOKEN }}@github.com/MarkizCar20/spring-petclinic-capstone-workflows.git HEAD:main
     
