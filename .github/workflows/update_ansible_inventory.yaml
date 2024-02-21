@@ -5,6 +5,10 @@ on:
 jobs:
   update_inventory:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./ansible
 
     steps:
       - name: Checkout code
@@ -32,7 +36,15 @@ jobs:
         id: update_inventory
         run: |
           instances_ips="${{ env.instances_ips }}"
-          echo "[host_instances]" > ansible/inventory.ini
+          echo "[host_instances]" > ./inventory.ini
           for ip in $instances_ips; do
-            echo "$ip ansible_user=username ansible_ssh_private_key=~/.ssh/id_rsa" >> ansible/inventory.ini
+            echo "$ip" >> ./inventory.ini
           done
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add ./inventory.ini
+          git commit -m "Update Ansible inventory with instance IPs"
+          git push
