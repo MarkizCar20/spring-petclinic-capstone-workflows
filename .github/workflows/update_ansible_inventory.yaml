@@ -25,23 +25,24 @@ jobs:
         with:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
       
-      - name: Get Instance IPs
-        id: get_ips
+      - name: Get Base Instance Name
         run: |
-          ip_addresses=$(gcloud compute instance-groups managed list-instances terraform-webservers-us \
-            --zone us-central1-c \
-            --format="value(instances[].networkInterfaces[0].accessConfigs[0].natIP)")
-          for ip_address in $ip_addresses; do
-            echo "Instance IP: $ip_address"
-            # Perform actions with each IP address here
-          done
-          echo "instances_ips=$ip_addresses" >> $GITHUB_ENV  # Set environment variable
-
+          prefix=$(gcloud compute instance-groups managed list --format='value(baseInstanceName)' --filter='name~^terraform-webservers-us')
+          echo "Base instance name: $prefix"
+          echo "base_instance_name=$prefix" >> $GITHUB_ENV
+      
+      - name: Get Instance IPs
+        run: |
+          prefix="${{ env.base_instance_name }}"
+          echo "Using prefix: $prefix"
+          ips=$(gcloud compute instances list --filter="name~^${prefix}" --format='value(networkInterfaces[0].accessConfigs[0].natIP)')
+          echo "Instance IPs: $ips"
+          echo "instances_ips=$ips" >> $GITHUB_ENV  # Set environment variable
 
       - name: Update Ansible inventory
-        id: update_inventory
         run: |
           instances_ips="${{ env.instances_ips }}"
+          echo "Updating Ansible inventory with instance IPs: $instances_ips"
           echo "[host_instances]" > ./inventory.ini
           for ip in $instances_ips; do
             echo "$ip" >> ./inventory.ini
