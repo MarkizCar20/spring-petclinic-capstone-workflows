@@ -61,3 +61,8 @@ resource "google_compute_firewall" "default" {
   }
   source_ranges = ["0.0.0.0/0"]
 }
+
+data "google_compute_instance_group_manager" "webservers_info" {
+  name = google_compute_instance_group_manager.webservers.name
+  zone = google_compute_instance_group_manager.webservers.zone
+}
