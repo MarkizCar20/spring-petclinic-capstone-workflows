@@ -1,6 +1,7 @@
 resource "google_compute_instance" "github_runner" {
   name = "github-runner"
   machine_type = "e2-medium"
+  zone = "us-central1-c"
 
   boot_disk {
     initialize_params {
