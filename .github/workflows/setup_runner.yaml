@@ -1,0 +1,31 @@
+name: Deploy runner
+
+on:
+  workflow_dispatch:
+  
+jobs:
+  deploy_runner:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./ansible
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Setup python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      
+      - name: Install Ansible
+        run: pip install Ansible
+      
+      - name: Deploy Github Actions runner
+        env:
+          RUNNER_TOKEN: ${{ secrets.RUNNER_TOKEN }}
+          REPO_URL: ${{ secrets.REPO_URL }}
+          RUNNER_NAME: ${{ secrets.RUNNER_NAME }}
+        run: ansible-playbook -i ./inventory.ini ./playbooks/setup_runner.yaml

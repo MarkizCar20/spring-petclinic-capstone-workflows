@@ -1,0 +1,38 @@
+---
+- name: Configure Self-Hosted GitHub Actions Runner
+  hosts: runners
+  become: true
+  vars:
+    github_runner_token: "{{ lookup('env', 'RUNNER_TOKEN') }}"
+    github_repo_url: "{{ lookup('env', 'REPO_URL') }}"
+    github_runner_name: "{{ lookup('env', 'RUNNER_NAME') }}"
+  tasks:
+    - name: Download and extract GitHub Actions runner package
+      get_url:
+        url: "https://github.com/actions/runner/releases/download/v2.280.0/actions-runner-linux-x64-2.280.0.tar.gz"
+        dest: /tmp/actions-runner.tar.gz
+
+    - name: Extract runner package
+      ansible.builtin.unarchive:
+        src: /tmp/actions-runner.tar.gz
+        dest: /opt/actions-runner
+        remote_src: yes
+
+    - name: Configure GitHub Actions runner
+      command: /opt/actions-runner/config.sh --url {{ github_repo_url }} --token {{ github_runner_token }} --name {{ github_runner_name }}
+      args:
+        chdir: /opt/actions-runner
+        creates: /opt/actions-runner/.runner
+        warn: no
+
+    - name: Start GitHub Actions runner service
+      service:
+        name: actions-runner
+        state: started
+        enabled: yes
+      register: runner_service
+
+    - name: Ensure GitHub Actions runner service is started
+      assert:
+        that: runner_service.state == 'started'
+        fail_msg: "Failed to start GitHub Actions runner service"
