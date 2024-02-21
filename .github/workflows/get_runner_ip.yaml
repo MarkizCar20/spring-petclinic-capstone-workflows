@@ -1,0 +1,38 @@
+name: Add runner to inventory
+
+on:
+  workflow_dispatch:
+    
+jobs:
+  update_inventory:
+    runs-on: ubuntu-latest
+    defaults:
+        run:
+          shell: bash
+          working-directory: ./ansible
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Auth GCP Service Account
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+          cleanup_credentials: false
+        
+      - name: Setup Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+        
+      - name: Get self-hosted-runner IP
+        id: get_runner_ip
+        run: |
+          runner_ip=$(gcloud compute instances describe github-runner --zone us-central1-c --format="value(networkInterfaces[0].accessConfigs[0].natIP)")
+          echo "Self-Hosted Runner IP: $runner_ip"
+          echo "[runners]" > ./inventory.ini
+          echo "$runner_ip" >> ./inventory.ini
+
+      
+    
