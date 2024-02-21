@@ -24,7 +24,7 @@ jobs:
       - name: Get Instance IPs
         id: get_ips
         run: |
-          ips=$(gcloud compute instance-groups managed describe webservers --zone us-central1-c --format="value(instances.networkInterfaces[0].accessConfigs[0].natIP)")
+          ips=$(gcloud compute instance-groups managed describe terraform-webservers-us --zone us-central1-c --format="value(instances.networkInterfaces[0].accessConfigs[0].natIP)")
           echo "$ips" > ips.txt
           echo "instances_ips=$ips" >> $GITHUB_ENV
 
