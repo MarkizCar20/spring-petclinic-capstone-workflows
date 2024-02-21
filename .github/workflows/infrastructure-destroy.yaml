@@ -1,4 +1,4 @@
-name: 'Google cloud IaC Destroy Resources'
+name: 'Destroy Infrastructure'
 defaults:
   run:
     shell: bash

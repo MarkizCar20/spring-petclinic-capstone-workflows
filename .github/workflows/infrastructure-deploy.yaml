@@ -1,5 +1,5 @@
 
-name: "Terraform Infrastructure Change Management Pipeline with Github Actions demo"
+name: "Deploy Infrastructure"
 on: 
   workflow_dispatch:
 

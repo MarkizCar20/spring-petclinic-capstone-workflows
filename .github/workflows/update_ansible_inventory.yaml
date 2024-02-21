@@ -43,7 +43,7 @@ jobs:
         run: |
           instances_ips="${{ env.instances_ips }}"
           echo "Updating Ansible inventory with instance IPs: $instances_ips"
-          echo "[host_instances]" > ./inventory.ini
+          echo "[host_instances]" >> ./inventory.ini
           for ip in $instances_ips; do
             echo "$ip" >> ./inventory.ini
           done

@@ -31,7 +31,7 @@ jobs:
         run: |
           runner_ip=$(gcloud compute instances describe github-runner --zone us-central1-c --format="value(networkInterfaces[0].accessConfigs[0].natIP)")
           echo "Self-Hosted Runner IP: $runner_ip"
-          echo "[runners]" > ./inventory.ini
+          echo "[runners]" >> ./inventory.ini
           echo "$runner_ip" >> ./inventory.ini
 
       - name: Commit and push changes
