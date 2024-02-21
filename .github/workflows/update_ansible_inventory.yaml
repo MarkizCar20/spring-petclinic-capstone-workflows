@@ -47,4 +47,4 @@ jobs:
           git config --local user.name "GitHub Action"
           git add ./inventory.ini
           git commit -m "Update Ansible inventory with instance IPs"
-          git push
+          git push https://{{ secrets.RUNNER_TOKEN }}@github.com/MarkizCar20/spring-petclinic-capstone-workflows.git HEAD:main
