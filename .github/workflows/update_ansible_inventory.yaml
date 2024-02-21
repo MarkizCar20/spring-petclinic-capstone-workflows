@@ -1,0 +1,33 @@
+name: Update ansible inventory
+on:
+  workflow_dispatch:
+    
+jobs:
+  update_inventory:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Setup Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@master
+        with:
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+      
+      - name: Get Instance IPs
+        id: Get IPs
+        run: |
+          ips=$(gcloud compute instance-groups managed describe webservers --zone us-central1-c --format="value(instances.networkInterfaces[0].accessConfigs[0].natIP)")
+          echo "$ips" > ips.txt
+          echo "instances_ips=$ips" >> $GITHUB_ENV
+
+      - name: Update Ansible inventory
+        id: update inventory
+        run: |
+          instances_ips="${{ env.instances_ips }}"
+          echo "[host_instances]" > ansible/inventory.ini
+          for ip in $instances_ips; do
+            echo "$ip ansible_user=username ansible_ssh_private_key=~/.ssh/id_rsa" >> ansible/inventory.ini
+          done
