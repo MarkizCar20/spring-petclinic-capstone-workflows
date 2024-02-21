@@ -17,7 +17,7 @@ jobs:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
       
       - name: Get Instance IPs
-        id: Get IPs
+        id: get_ips
         run: |
           ips=$(gcloud compute instance-groups managed describe webservers --zone us-central1-c --format="value(instances.networkInterfaces[0].accessConfigs[0].natIP)")
           echo "$ips" > ips.txt
