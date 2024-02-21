@@ -28,10 +28,15 @@ jobs:
       - name: Get Instance IPs
         id: get_ips
         run: |
-          ips=$(gcloud compute instance-groups managed describe terraform-webservers-us --zone us-central1-c --format="value(instances.networkInterfaces[0].accessConfigs[0].natIP)")
-          echo "Debug: Retrieved IP addresses: $ips"
-          echo "$ips" > ips.txt
-          echo "instances_ips=$ips" >> $GITHUB_ENV
+          ip_addresses=$(gcloud compute instance-groups managed list-instances terraform-webservers-us \
+          --zone us-central1-c \
+          --format="value(instances[].networkInterfaces[0].accessConfigs[0].natIP)" \
+          --filter="status:RUNNING")
+          for ip_address in $ip_addresses; do
+              echo "Instance IP: $ip_address"
+              # Perform actions with each IP address here
+          done
+          echo "instances_ips=$ip_addresses" >> $GITHUB_ENV  # Set environment variable
 
       - name: Update Ansible inventory
         id: update_inventory
