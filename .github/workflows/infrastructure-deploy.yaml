@@ -31,10 +31,6 @@ jobs:
         id: init
         run: terraform init -backend-config="bucket=capstone_project_terraform_state"
 
-      # - name: Terraform format
-      #   id: fmt
-      #   run: terraform fmt -cheßck
-
       - name: Terraform validate
         id: validate
         run: terraform validate
@@ -46,3 +42,9 @@ jobs:
       - name: Terraform Apply
         id: Apply
         run: terraform apply -auto-approve -input=false
+      
+      - name: Retreave Terraform output
+        id: inventory
+        run: |
+          echo "[host_instances]" > ../ansible/inventory.ini
+          echo "$INSTANCE_IPS" | tr -d '[]"' | sed 's/,/ /g' >> ../ansible/inventory.ini

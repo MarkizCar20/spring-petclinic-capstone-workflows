@@ -22,7 +22,7 @@ resource "google_compute_instance_group_manager" "webservers" {
   description = "terraform test instance group"
   zone = "us-central1-c"
 
-  target_size = 2
+  target_size = 1
 
   version {
     instance_template = google_compute_instance_template.group_instance.id
