@@ -30,8 +30,7 @@ jobs:
         run: |
           ip_addresses=$(gcloud compute instance-groups managed list-instances terraform-webservers-us \
             --zone us-central1-c \
-            --format="value(instances[].networkInterfaces[0].accessConfigs[0].natIP)" \
-            --filter="status:RUNNING")
+            --format="value(instances[].networkInterfaces[0].accessConfigs[0].natIP)"
           for ip_address in $ip_addresses; do
             echo "Instance IP: $ip_address"
             # Perform actions with each IP address here
