@@ -29,7 +29,6 @@
       apt:
         name: containerd.io
         state: present
-        version: "1.6.24"
 
     - name: Install Docker
       apt:
