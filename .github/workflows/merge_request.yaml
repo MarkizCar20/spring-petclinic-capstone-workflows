@@ -15,9 +15,6 @@ jobs:
       
       - name: Auth GCP Service Account
         uses: google-github-actions/auth@v2
-        with:
-          credentials_json: ${{ secrets.GCP_SA_KEY }}
-          cleanup_credentials: false
       
       - name: Set up Cloud SDK
         uses: google-github-actions/auth@v2
