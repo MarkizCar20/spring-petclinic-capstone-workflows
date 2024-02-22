@@ -18,6 +18,11 @@
         - curl
         - gnupg-agent
         - software-properties-common
+        
+    - name: Install libseccomp2 if needed
+      apt:
+        name: libseccomp2
+        state: latest
 
     - name: Add Docker GPG key
       apt_key:
