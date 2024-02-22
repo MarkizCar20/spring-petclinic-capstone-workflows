@@ -2,6 +2,7 @@ resource "google_sql_database_instance" "database_instance" {
   name = "database-instance"
   database_version = "POSTGRES_13"
   region = "us-central1"
+  deletion_protection = false
 
   settings {
     tier = "db-f1-micro"
