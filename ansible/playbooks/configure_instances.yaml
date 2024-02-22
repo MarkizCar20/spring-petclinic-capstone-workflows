@@ -4,6 +4,10 @@
   become: true
 
   tasks:
+    - name: Update package lists
+      apt:
+        update_cache: yes
+
     - name: Install dependencies
       apt:
         name: "{{ item }}"
@@ -14,6 +18,7 @@
         - curl
         - gnupg-agent
         - software-properties-common
+        - libseccomp2
 
     - name: Add Docker GPG key
       apt_key:
