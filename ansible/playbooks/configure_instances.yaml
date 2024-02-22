@@ -21,7 +21,7 @@
 
     - name: Install libseccomp2 if needed
       apt:
-        name: libseccomp2=2.5.0
+        name: libseccomp2=2.5.1-1
         state: present
 
     - name: Add Docker GPG key
