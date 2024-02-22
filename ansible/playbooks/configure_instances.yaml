@@ -18,7 +18,6 @@
         - curl
         - gnupg-agent
         - software-properties-common
-        - libseccomp2
 
     - name: Add Docker GPG key
       apt_key:
@@ -34,6 +33,7 @@
       apt:
         name: containerd.io
         state: present
+        version: "1.6.28-1"
 
     - name: Install Docker
       apt:
