@@ -1,0 +1,22 @@
+name: Install Docker on GCP Instances
+defaults:
+  run:
+    shell: bash
+    working-directory: ./ansible
+on:
+  workflow_dispatch:
+    
+  
+
+jobs:
+  install_docker:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Run Ansible Playbook
+        run: |
+          ansible-playbook -i ./inventory.yml ./configure_instances.yml
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: $GCP_SERVICE_ACCOUNT_KEY_FILE
