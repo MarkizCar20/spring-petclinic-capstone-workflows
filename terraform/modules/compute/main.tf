@@ -1,5 +1,5 @@
-module "github_runner" {
-  source = "./github_runner"
+module "database_instance" {
+  source = "./database_instance"
 }
 
 module "host_instances" {
