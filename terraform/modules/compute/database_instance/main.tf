@@ -14,5 +14,5 @@ resource "google_sql_database" "capstone_database" {
   instance = google_sql_database_instance.database_instance.name
 
   charset = "UTF8"
-  collation = "en_US.ETF8"
+  collation = "en_US.UTF8"
 }
