@@ -6,7 +6,6 @@ defaults:
 on:
   workflow_dispatch:
     
-  g
 
 jobs:
   install_docker:
