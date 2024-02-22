@@ -22,6 +22,6 @@ jobs:
 
       - name: Run Ansible Playbook
         run: |
-          ansible-playbook -i ./inventory.yml ./configure_instances.yml
+          ansible-playbook -i ./inventory.yml .playbooks/configure_instances.yml
         env:
           GOOGLE_APPLICATION_CREDENTIALS: $GCP_SERVICE_ACCOUNT_KEY_FILE
