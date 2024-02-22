@@ -33,7 +33,6 @@
       apt:
         name: containerd.io
         state: present
-        version: "1.6.28-1"
 
     - name: Install Docker
       apt:
