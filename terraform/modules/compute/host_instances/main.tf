@@ -15,8 +15,8 @@ resource "google_compute_instance_template" "group_instance" {
   }
 
   metadata = {
-    ssh-keys = "ubuntu:ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC27DEQmygxeGZ9QkWCr8ofJtmv1ADxddg+eZ93Nv0SNIL8ZclNRPXxgmHI0gpCAt2ctm4Vj9gtFvEdBQAIISyrWdZmS5In3nlbizE/yb9liwDtn428Yc1B1jwF0+2iVvSd4RF6qU4GzAU6lq/1rRCfBq/govXpYUWjTBpze7idUHdh/syt1aPGo/PSJvsJEe+VygUTPR2hT7wEv5Vh6bMpwOnfJYRzrlVREm2X6E4DWPPTO+HSD3ur8F8nrQSPtA6nnjC+4OeeuagkvT4iH4usGFu+7HU6zaA8ORG+dNfFpYEmcI1YgCv3FUrhptZ+pJ2s9ee/JnTaLlqTLDMWdufN3g9F6zCTtKeoP6SKo/fxhTj1ELTtNk28dpwyoG4U+5ojT9yFJD0WXd6xbgXmKU+X0MQdoY/ttuFR5VfUkHv4dwineZMZ3s4qjX9zcujbVTMP5kIVZz9VUyGfxzjvf9IAqGxC6zgCewKGNA9s0kLlFhM6Cswa9I8H5n1/hRubpdjgl5iR7ay7BfZCvGAFvGEbiRohWoKgElxoUuhS0HMdpeiJGv6bCgwa+kNd/7qPuauKecXNnrR/+CzSjnPj80esBy4y1RaS8XGYv9/5Mjl9WzLbjEWxUKUw1/02rH17YZ00WYUmNwaZ2DL4dLy1hyPIOBNORifQs1sWDZ+rxiT2QQ== mijailovicmarko2000@github-runner"
-  }
+     ssh-keys = file("${path.module}/ssh_keys.txt")
+    }
 
 }
 
@@ -46,7 +46,7 @@ resource "google_compute_autoscaler" "group_autoscaler" {
   zone = "us-central1-c"
 
   autoscaling_policy {
-    max_replicas = 10
+    max_replicas = 1
     min_replicas = 1
     cooldown_period = 60
     
@@ -61,7 +61,7 @@ resource "google_compute_firewall" "default" {
   name = "allow-http-traffic"
   network = "default"
   allow {
-    ports = ["80"]
+    ports = ["80", "8080"]
     protocol = "tcp"
   }
   source_ranges = ["0.0.0.0/0"]

@@ -60,6 +60,6 @@ resource "google_compute_health_check" "default1" {
     check_interval_sec = 1
 
     tcp_health_check {
-      port = "80"
+      port = "8080"
     }
 }
