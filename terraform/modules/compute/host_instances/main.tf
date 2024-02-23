@@ -21,6 +21,12 @@ resource "google_compute_instance_template" "group_instance" {
     EOT
   }
 
+  service_account {
+    # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
+    email  = "google_service_account.default.iac-workflow-account@petclinic-capstone-project.iam.gserviceaccount.com"
+    scopes = ["cloud-platform"]
+  }
+
 
 }
 
