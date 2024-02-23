@@ -1,0 +1,28 @@
+name: Integrated Deployment Workflow
+
+on:
+  workflow_dispatch: # This event allows manual triggering of the workflow
+
+jobs:
+  deploy_infrastructure:
+    name: Deploy Infrastructure
+    runs-on: self-hosted
+    steps:
+      - name: Trigger Infrastructure Deployment Workflow
+        uses: ./.github/workflows/infrastructure_deploy.yaml
+
+  update_ansible_inventory:
+    name: Update Ansible Inventory
+    runs-on: self-hosted
+    needs: deploy_infrastructure
+    steps:
+      - name: Trigger Ansible Inventory Update Workflow
+        uses: ./.github/workflows/update_ansible_inventory.yaml
+
+  install_docker:
+    name: Install Docker on Instances
+    runs-on: self-hosted
+    needs: update_ansible_inventory
+    steps:
+      - name: Trigger Docker Installation Workflow
+        uses: ./.github/workflows/setup_instances.yaml
